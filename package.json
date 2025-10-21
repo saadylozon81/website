@@ -1,0 +1,17 @@
+{
+  "name": "talent-acquisition-website",
+  "version": "1.0.0",
+  "description": "Talent Acquisition Company Website",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
+  "keywords": ["talent", "acquisition", "recruitment"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
