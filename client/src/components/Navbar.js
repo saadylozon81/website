@@ -31,6 +31,9 @@ function Navbar() {
           <Link to="/services" className={`nav-link ${isActive('/services')}`} onClick={toggleMenu}>
             Services
           </Link>
+          <Link to="/staff-augmentation" className={`nav-link ${isActive('/staff-augmentation')}`} onClick={toggleMenu}>
+            Staff Augmentation
+          </Link>
           <Link to="/jobs" className={`nav-link ${isActive('/jobs')}`} onClick={toggleMenu}>
             Jobs
           </Link>
