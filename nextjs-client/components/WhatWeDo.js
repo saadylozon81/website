@@ -1,34 +1,10 @@
 const services = [
-  {
-    icon: 'bi-display',
-    title: 'Software Engineering',
-    desc: 'Robust, scalable, and future-ready software built with excellence.',
-  },
-  {
-    icon: 'bi-diagram-3',
-    title: 'AI & Data Solutions',
-    desc: 'AI-powered solutions and data engineering that drive impact.',
-  },
-  {
-    icon: 'bi-cloud-arrow-up',
-    title: 'Cloud & DevOps',
-    desc: 'Cloud-native, secure, and optimized for performance.',
-  },
-  {
-    icon: 'bi-check2-circle',
-    title: 'QA & Test Automation',
-    desc: 'Intelligent testing for high-quality and sustainable engineering.',
-  },
-  {
-    icon: 'bi-flask',
-    title: 'R&D Expansion',
-    desc: 'Extend your R&D capabilities with our engineering expertise.',
-  },
-  {
-    icon: 'bi-people',
-    title: 'Dedicated Engineering Teams',
-    desc: 'Dedicated teams aligned with your goals and culture.',
-  },
+  { icon:'bi-display',        title:'Software\nEngineering',        desc:'Robust, scalable, and future-ready software built with excellence.'           },
+  { icon:'bi-diagram-3',      title:'AI & Data\nSolutions',         desc:'AI-powered solutions and data engineering that drive impact.'                  },
+  { icon:'bi-cloud-arrow-up', title:'Cloud &\nDevOps',              desc:'Cloud-native, secure, and optimized for performance.'                          },
+  { icon:'bi-check2-circle',  title:'QA & Test\nAutomation',        desc:'Intelligent testing for high-quality and sustainable engineering.'              },
+  { icon:'bi-flask',          title:'R&D\nExpansion',               desc:'Extend your R&D capabilities with our engineering expertise.'                  },
+  { icon:'bi-people',         title:'Dedicated\nEngineering Teams', desc:'Dedicated teams aligned with your goals and culture.'                          },
 ]
 
 export default function WhatWeDo() {
@@ -41,10 +17,10 @@ export default function WhatWeDo() {
 
         <div className="row g-3">
           {services.map((s, i) => (
-            <div key={i} className="col-6 col-md-4 col-lg-2">
+            <div key={i} className="col-6 col-sm-4 col-lg-2">
               <div className="service-card">
                 <i className={`bi ${s.icon} service-icon`} />
-                <h3 className="service-title">{s.title}</h3>
+                <h3 className="service-title" style={{ whiteSpace:'pre-line' }}>{s.title}</h3>
                 <p className="service-desc">{s.desc}</p>
                 <div className="service-line" />
               </div>

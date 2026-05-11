@@ -3,25 +3,22 @@ const models = [
     icon: 'bi-people-fill',
     title: 'Staff Augmentation',
     desc: 'Access specialized talent on-demand.',
-    bg: 'linear-gradient(135deg, #1a2535 0%, #0d1a2a 100%)',
-    overlay: 'rgba(15,25,45,0.55)',
-    pattern: true,
+    bg: 'linear-gradient(160deg,#1b2e44 0%,#0d1e30 60%,#071525 100%)',
+    dots: ['#22d3ee','#3b82f6','#818cf8'],
   },
   {
     icon: 'bi-person-workspace',
     title: 'Dedicated Engineering Teams',
     desc: 'Build dedicated teams that deliver.',
-    bg: 'linear-gradient(135deg, #1e2030 0%, #12182a 100%)',
-    overlay: 'rgba(15,20,40,0.55)',
-    pattern: true,
+    bg: 'linear-gradient(160deg,#1e2440 0%,#111930 60%,#080e1f 100%)',
+    dots: ['#34d399','#10b981','#6ee7b7'],
   },
   {
     icon: 'bi-globe2',
     title: 'R&D Expansion Centers',
     desc: 'Extend your R&D with our global presence.',
-    bg: 'linear-gradient(135deg, #0f1e30 0%, #0a1525 100%)',
-    overlay: 'rgba(10,20,35,0.55)',
-    pattern: true,
+    bg: 'linear-gradient(160deg,#162035 0%,#0d1826 60%,#071020 100%)',
+    dots: ['#f59e0b','#fbbf24','#fde68a'],
   },
 ]
 
@@ -37,47 +34,53 @@ export default function EngineeredResults() {
           {models.map((m, i) => (
             <div key={i} className="col-md-4">
               <div className="engage-card">
-                {/* Background */}
-                <div
-                  className="engage-bg"
-                  style={{
-                    background: m.bg,
-                  }}
-                />
 
-                {/* Grid pattern overlay */}
+                {/* Background */}
+                <div className="engage-bg" style={{ background: m.bg }} />
+
+                {/* Grid texture */}
                 <div style={{
-                  position: 'absolute', inset: 0,
-                  backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-                  backgroundSize: '28px 28px',
+                  position:'absolute', inset:0,
+                  backgroundImage:'linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px)',
+                  backgroundSize:'28px 28px',
                 }} />
 
-                {/* Decorative floating dots */}
-                {[...Array(6)].map((_, j) => (
+                {/* Coloured glow orbs (unique per card) */}
+                {m.dots.map((color, j) => (
                   <div key={j} style={{
-                    position: 'absolute',
-                    width: 4, height: 4,
-                    borderRadius: '50%',
-                    background: 'rgba(255,184,0,0.4)',
-                    top: `${15 + j * 12}%`,
-                    left: `${60 + (j % 3) * 12}%`,
+                    position:'absolute',
+                    width: 6+j*2, height: 6+j*2,
+                    borderRadius:'50%',
+                    background: color,
+                    opacity: 0.55,
+                    top:`${18+j*22}%`,
+                    right:`${12+j*15}%`,
+                    boxShadow:`0 0 12px ${color}`,
                   }} />
                 ))}
 
+                {/* Team silhouette pattern */}
+                <div style={{
+                  position:'absolute', top:'50%', left:'50%',
+                  transform:'translate(-50%,-50%)',
+                  fontSize:'7rem',
+                  color:'rgba(255,255,255,0.035)',
+                  lineHeight:1,
+                }}>
+                  <i className={`bi ${m.icon}`} />
+                </div>
+
                 <div className="engage-overlay" />
 
-                {/* Icon badge */}
                 <div className="engage-icon-badge">
                   <i className={`bi ${m.icon}`} />
                 </div>
 
-                {/* Content */}
                 <div className="engage-content">
                   <h3 className="engage-title">{m.title}</h3>
-                  <p className="engage-desc">{m.desc}</p>
+                  <p className="engage-desc mb-0">{m.desc}</p>
                 </div>
 
-                {/* Arrow button */}
                 <div className="engage-arrow">
                   <i className="bi bi-arrow-right" />
                 </div>
