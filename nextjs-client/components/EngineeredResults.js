@@ -1,83 +1,85 @@
-const results = [
+const models = [
   {
-    tag: 'Model',
-    title: 'Staff Augmentation',
-    desc: 'Embed pre-vetted engineers directly into your team for seamless delivery.',
-    gradient: 'linear-gradient(135deg, #1a2a3a 0%, #0d1f2d 50%, #091520 100%)',
     icon: 'bi-people-fill',
+    title: 'Staff Augmentation',
+    desc: 'Access specialized talent on-demand.',
+    bg: 'linear-gradient(135deg, #1a2535 0%, #0d1a2a 100%)',
+    overlay: 'rgba(15,25,45,0.55)',
+    pattern: true,
   },
   {
-    tag: 'Model',
-    title: 'Fractional Engineering Teams',
-    desc: 'Fully managed, cross-functional product teams built around your roadmap.',
-    gradient: 'linear-gradient(135deg, #1e1a0f 0%, #2a2010 50%, #1a1408 100%)',
-    icon: 'bi-grid-3x3-gap-fill',
+    icon: 'bi-person-workspace',
+    title: 'Dedicated Engineering Teams',
+    desc: 'Build dedicated teams that deliver.',
+    bg: 'linear-gradient(135deg, #1e2030 0%, #12182a 100%)',
+    overlay: 'rgba(15,20,40,0.55)',
+    pattern: true,
   },
   {
-    tag: 'Centre',
+    icon: 'bi-globe2',
     title: 'R&D Expansion Centers',
-    desc: "Dedicated R&D hubs extending your company's innovation capacity globally.",
-    gradient: 'linear-gradient(135deg, #0f1a2a 0%, #102030 50%, #0a1520 100%)',
-    icon: 'bi-lightbulb-fill',
+    desc: 'Extend your R&D with our global presence.',
+    bg: 'linear-gradient(135deg, #0f1e30 0%, #0a1525 100%)',
+    overlay: 'rgba(10,20,35,0.55)',
+    pattern: true,
   },
 ]
 
 export default function EngineeredResults() {
   return (
-    <section className="results-section" id="results">
+    <section className="engagement-section" id="engagement">
       <div className="container">
-        <div className="text-center mb-5">
-          <p className="section-tag">Engineered Results</p>
-          <h2 className="section-title">Delivery Models That Scale</h2>
-          <p className="section-desc mx-auto">
-            Choose the engagement that fits your business — all backed by ASAL&apos;s engineering
-            rigour and delivery culture.
-          </p>
+        <div className="section-header-line">
+          <span>Engagement Models</span>
         </div>
 
         <div className="row g-4">
-          {results.map((r, i) => (
+          {models.map((m, i) => (
             <div key={i} className="col-md-4">
-              <div className="result-card">
+              <div className="engage-card">
+                {/* Background */}
                 <div
-                  className="result-card-bg"
-                  style={{ background: r.gradient }}
-                />
-
-                {/* Decorative grid lines */}
-                <div
+                  className="engage-bg"
                   style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage:
-                      'linear-gradient(rgba(255,184,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,184,0,0.03) 1px, transparent 1px)',
-                    backgroundSize: '30px 30px',
+                    background: m.bg,
                   }}
                 />
 
-                {/* Large icon */}
-                <div
-                  style={{
+                {/* Grid pattern overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+                  backgroundSize: '28px 28px',
+                }} />
+
+                {/* Decorative floating dots */}
+                {[...Array(6)].map((_, j) => (
+                  <div key={j} style={{
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%,-50%)',
-                    fontSize: '5rem',
-                    color: 'rgba(255,184,0,0.08)',
-                  }}
-                >
-                  <i className={`bi ${r.icon}`} />
+                    width: 4, height: 4,
+                    borderRadius: '50%',
+                    background: 'rgba(255,184,0,0.4)',
+                    top: `${15 + j * 12}%`,
+                    left: `${60 + (j % 3) * 12}%`,
+                  }} />
+                ))}
+
+                <div className="engage-overlay" />
+
+                {/* Icon badge */}
+                <div className="engage-icon-badge">
+                  <i className={`bi ${m.icon}`} />
                 </div>
 
-                <div className="result-card-overlay" />
+                {/* Content */}
+                <div className="engage-content">
+                  <h3 className="engage-title">{m.title}</h3>
+                  <p className="engage-desc">{m.desc}</p>
+                </div>
 
-                <div className="result-card-content">
-                  <div className="result-tag">
-                    <i className="bi bi-bookmark-fill me-1" />
-                    {r.tag}
-                  </div>
-                  <h3 className="result-title">{r.title}</h3>
-                  <p className="result-desc mb-0">{r.desc}</p>
+                {/* Arrow button */}
+                <div className="engage-arrow">
+                  <i className="bi bi-arrow-right" />
                 </div>
               </div>
             </div>

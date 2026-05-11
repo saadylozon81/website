@@ -1,33 +1,33 @@
 const services = [
   {
-    icon: 'bi-code-slash',
+    icon: 'bi-display',
     title: 'Software Engineering',
-    desc: 'Reliable, scalable, and well-crafted software built with engineering excellence at every layer.',
+    desc: 'Robust, scalable, and future-ready software built with excellence.',
   },
   {
-    icon: 'bi-cpu',
-    title: 'AI & Data Engineering',
-    desc: 'Harness data and AI to create actionable intelligence and products that drive real impact.',
+    icon: 'bi-diagram-3',
+    title: 'AI & Data Solutions',
+    desc: 'AI-powered solutions and data engineering that drive impact.',
   },
   {
-    icon: 'bi-cloud-arrow-up-fill',
+    icon: 'bi-cloud-arrow-up',
     title: 'Cloud & DevOps',
-    desc: 'Accelerate cloud performance with high-confidence DevOps pipelines and infrastructure.',
+    desc: 'Cloud-native, secure, and optimized for performance.',
   },
   {
-    icon: 'bi-bug-fill',
+    icon: 'bi-check2-circle',
     title: 'QA & Test Automation',
-    desc: 'Sustainable engineering quality through automated testing and continuous QA practices.',
+    desc: 'Intelligent testing for high-quality and sustainable engineering.',
   },
   {
-    icon: 'bi-flask-fill',
-    title: 'R&D Excellence',
-    desc: 'Dedicated R&D teams exploring the edges of technology to give your products a lasting edge.',
+    icon: 'bi-flask',
+    title: 'R&D Expansion',
+    desc: 'Extend your R&D capabilities with our engineering expertise.',
   },
   {
-    icon: 'bi-person-workspace',
+    icon: 'bi-people',
     title: 'Dedicated Engineering Teams',
-    desc: 'Fully embedded, senior engineering teams aligned with your goals and delivery culture.',
+    desc: 'Dedicated teams aligned with your goals and culture.',
   },
 ]
 
@@ -35,24 +35,18 @@ export default function WhatWeDo() {
   return (
     <section className="whatwedo-section" id="services">
       <div className="container">
-        <div className="text-center mb-5">
-          <p className="section-tag">What We Do</p>
-          <h2 className="section-title">End-to-End Technology Services</h2>
-          <p className="section-desc mx-auto">
-            We partner with companies to engineer, scale, and modernise their technology — from
-            core infrastructure to cutting-edge AI products.
-          </p>
+        <div className="section-header-line">
+          <span>What We Do</span>
         </div>
 
-        <div className="row g-4">
+        <div className="row g-3">
           {services.map((s, i) => (
-            <div key={i} className="col-md-6 col-lg-4">
+            <div key={i} className="col-6 col-md-4 col-lg-2">
               <div className="service-card">
-                <div className="service-icon">
-                  <i className={`bi ${s.icon}`} />
-                </div>
+                <i className={`bi ${s.icon} service-icon`} />
                 <h3 className="service-title">{s.title}</h3>
-                <p className="service-desc mb-0">{s.desc}</p>
+                <p className="service-desc">{s.desc}</p>
+                <div className="service-line" />
               </div>
             </div>
           ))}

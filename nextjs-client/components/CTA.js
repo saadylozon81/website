@@ -1,31 +1,25 @@
 export default function CTA() {
   return (
     <section className="cta-section" id="contact">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-8 text-center">
-            <p className="section-tag">Ready to Scale?</p>
+      {/* Globe decoration */}
+      <div className="cta-globe">
+        <i className="bi bi-globe" />
+      </div>
 
-            <h2 className="cta-title mb-4">
-              Ready to Scale Your{' '}
-              <span className="highlight">Technology Team?</span>
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="row align-items-center">
+          <div className="col-lg-7">
+            <h2 className="cta-title">
+              Ready to Scale Your<br />Technology Team?
             </h2>
-
-            <p className="cta-desc mb-5">
-              Let&apos;s talk about how ASAL can embed engineering excellence into your product
-              roadmap — from day one.
+            <p className="cta-sub">
+              Let&apos;s build the right engineering model for your business.
             </p>
-
-            <div className="d-flex flex-wrap gap-3 justify-content-center">
-              <a href="mailto:info@asaltechnologies.com" className="btn-primary-asal">
-                <i className="bi bi-envelope-fill" />
-                Contact ASAL
-              </a>
-              <a href="#services" className="btn-outline-asal">
-                <i className="bi bi-grid-fill" />
-                Our Services
-              </a>
-            </div>
+          </div>
+          <div className="col-lg-5 d-flex justify-content-lg-end mt-4 mt-lg-0">
+            <a href="mailto:info@asaltechnologies.com" className="btn-cta-dark">
+              Contact ASAL <i className="bi bi-arrow-right" />
+            </a>
           </div>
         </div>
       </div>
