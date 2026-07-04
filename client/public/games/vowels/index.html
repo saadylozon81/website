@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Vowel Quest - Learn A E I O U!</title>
+<style>
+  :root {
+    --a-color: #ff6b6b;
+    --e-color: #ffb84d;
+    --i-color: #4ecdc4;
+    --o-color: #6c5ce7;
+    --u-color: #ff85c0;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
+    background: linear-gradient(160deg, #fdfcdc 0%, #cbf3f0 50%, #ffd6e8 100%);
+    overflow-x: hidden;
+  }
+
+  #app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 16px;
+  }
+
+  .screen {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1.title {
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    color: #4a3f6b;
+    text-shadow: 3px 3px 0 rgba(255,255,255,0.7);
+    margin: 8px 0 4px;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    color: #6b5b95;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .big-emoji {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+    margin: 8px 0;
+  }
+
+  .menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 340px;
+    margin-top: 12px;
+  }
+
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+
+  .big-button {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    padding: 20px 24px;
+    border-radius: 24px;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+
+  .big-button:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+  }
+
+  .btn-play { background: #ff6b6b; }
+  .btn-learn { background: #4ecdc4; }
+  .btn-back { background: #a29bfe; margin-top: 24px; padding: 12px 20px; font-size: 1.1rem; border-radius: 18px; color: white; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .btn-back:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+
+  /* LEARN SCREEN */
+  .vowel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+
+  .vowel-card {
+    border-radius: 24px;
+    padding: 24px 10px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+    transition: transform 0.1s ease;
+  }
+  .vowel-card:active { transform: scale(0.95) translateY(3px); }
+  .vowel-card .letter { font-size: 3.2rem; display: block; }
+  .vowel-card .word { font-size: 1rem; margin-top: 6px; display: block; }
+  .vowel-card .emoji { font-size: 2rem; display: block; margin-top: 4px; }
+
+  .card-a { background: var(--a-color); }
+  .card-e { background: var(--e-color); }
+  .card-i { background: var(--i-color); }
+  .card-o { background: var(--o-color); }
+  .card-u { background: var(--u-color); }
+
+  /* PLAY SCREEN */
+  .hud {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 480px;
+    font-size: 1.1rem;
+    color: #4a3f6b;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .word-card {
+    background: white;
+    border-radius: 28px;
+    padding: 28px 20px;
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+
+  .word-emoji { font-size: clamp(3.5rem, 20vw, 5.5rem); }
+
+  .word-display {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    letter-spacing: 6px;
+    color: #333;
+    margin: 12px 0 4px;
+    font-weight: bold;
+  }
+
+  .blank {
+    display: inline-block;
+    width: 1ch;
+    border-bottom: 6px solid #ff6b6b;
+    color: transparent;
+  }
+
+  .blank.filled {
+    color: #4ecdc4;
+    border-color: #4ecdc4;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .vowel-option {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.15);
+    transition: transform 0.08s ease;
+  }
+  .vowel-option:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
+
+  .vowel-option.opt-a { background: var(--a-color); }
+  .vowel-option.opt-e { background: var(--e-color); }
+  .vowel-option.opt-i { background: var(--i-color); }
+  .vowel-option.opt-o { background: var(--o-color); }
+  .vowel-option.opt-u { background: var(--u-color); }
+
+  .vowel-option.correct {
+    animation: pop 0.4s ease;
+    outline: 4px solid #2ecc71;
+  }
+  .vowel-option.wrong {
+    animation: shake 0.4s ease;
+    outline: 4px solid #e74c3c;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  .feedback {
+    min-height: 32px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+  .feedback.good { color: #2ecc71; }
+  .feedback.bad { color: #e74c3c; }
+
+  .progress-bar-track {
+    width: 100%;
+    max-width: 480px;
+    height: 14px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ecdc4, #ff6b6b);
+    transition: width 0.3s ease;
+  }
+
+  /* END SCREEN */
+  .stars {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    letter-spacing: 8px;
+    margin: 12px 0;
+  }
+
+  .confetti-piece {
+    position: fixed;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    opacity: 0.9;
+    animation: fall linear forwards;
+    z-index: 5;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); opacity: 1; }
+  }
+
+  .hidden { display: none !important; }
+
+  footer.credit {
+    margin-top: 32px;
+    font-size: 0.85rem;
+    color: #7d7391;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOME SCREEN -->
+  <section id="screen-home" class="screen">
+    <div class="big-emoji">🦄🔤</div>
+    <h1 class="title">Vowel Quest</h1>
+    <p class="subtitle">Learn the letters A, E, I, O, U!</p>
+    <div class="menu-buttons">
+      <button class="big-button btn-learn" onclick="showScreen('learn')">📖 Learn Vowels</button>
+      <button class="big-button btn-play" onclick="startGame()">🎮 Play Game</button>
+    </div>
+  </section>
+
+  <!-- LEARN SCREEN -->
+  <section id="screen-learn" class="screen hidden">
+    <h1 class="title" style="font-size:2rem;">Meet the Vowels!</h1>
+    <p class="subtitle">Tap a letter to hear it 🔊</p>
+    <div class="vowel-grid" id="vowel-grid"></div>
+    <button class="big-button btn-back" onclick="showScreen('home')">⬅ Back</button>
+  </section>
+
+  <!-- PLAY SCREEN -->
+  <section id="screen-play" class="screen hidden">
+    <div class="hud">
+      <span id="hud-round">Word 1 / 10</span>
+      <span id="hud-score">⭐ 0</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="word-card">
+      <div class="word-emoji" id="word-emoji">🐱</div>
+      <div class="word-display" id="word-display"></div>
+      <div class="options" id="vowel-options"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+  </section>
+
+  <!-- END SCREEN -->
+  <section id="screen-end" class="screen hidden">
+    <h1 class="title">Great Job! 🎉</h1>
+    <div class="stars" id="end-stars"></div>
+    <p class="subtitle" id="end-message"></p>
+    <div class="menu-buttons">
+      <button class="big-button btn-play" onclick="startGame()">🔁 Play Again</button>
+      <button class="big-button btn-learn" onclick="showScreen('home')">🏠 Home</button>
+    </div>
+  </section>
+
+  <footer class="credit">Made with 💖 for little learners</footer>
+</div>
+
+<script>
+  var VOWELS = [
+    { letter: 'A', className: 'a', word: 'Apple', emoji: '🍎' },
+    { letter: 'E', className: 'e', word: 'Elephant', emoji: '🐘' },
+    { letter: 'I', className: 'i', word: 'Igloo', emoji: '🧊' },
+    { letter: 'O', className: 'o', word: 'Octopus', emoji: '🐙' },
+    { letter: 'U', className: 'u', word: 'Umbrella', emoji: '☂️' }
+  ];
+
+  var WORDS = [
+    { word: 'cat', missing: 'a', emoji: '🐱' },
+    { word: 'bag', missing: 'a', emoji: '🎒' },
+    { word: 'hat', missing: 'a', emoji: '👒' },
+    { word: 'map', missing: 'a', emoji: '🗺️' },
+    { word: 'pen', missing: 'e', emoji: '🖊️' },
+    { word: 'bed', missing: 'e', emoji: '🛏️' },
+    { word: 'ten', missing: 'e', emoji: '🔟' },
+    { word: 'hen', missing: 'e', emoji: '🐔' },
+    { word: 'pig', missing: 'i', emoji: '🐷' },
+    { word: 'fish', missing: 'i', emoji: '🐟' },
+    { word: 'lip', missing: 'i', emoji: '👄' },
+    { word: 'six', missing: 'i', emoji: '6️⃣' },
+    { word: 'dog', missing: 'o', emoji: '🐶' },
+    { word: 'fox', missing: 'o', emoji: '🦊' },
+    { word: 'box', missing: 'o', emoji: '📦' },
+    { word: 'pot', missing: 'o', emoji: '🍲' },
+    { word: 'sun', missing: 'u', emoji: '☀️' },
+    { word: 'cup', missing: 'u', emoji: '☕' },
+    { word: 'bus', missing: 'u', emoji: '🚌' },
+    { word: 'duck', missing: 'u', emoji: '🦆' }
+  ];
+
+  var ROUNDS_PER_GAME = 10;
+  var state = {
+    order: [],
+    index: 0,
+    score: 0,
+    locked: false
+  };
+
+  function speak(text) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      var utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 0.8;
+      utter.pitch = 1.1;
+      window.speechSynthesis.speak(utter);
+    } catch (e) { /* speech not available */ }
+  }
+
+  function showScreen(name) {
+    ['home', 'learn', 'play', 'end'].forEach(function (s) {
+      document.getElementById('screen-' + s).classList.toggle('hidden', s !== name);
+    });
+  }
+
+  function buildLearnScreen() {
+    var grid = document.getElementById('vowel-grid');
+    grid.innerHTML = '';
+    VOWELS.forEach(function (v) {
+      var card = document.createElement('button');
+      card.className = 'vowel-card card-' + v.className;
+      card.innerHTML =
+        '<span class="letter">' + v.letter + '</span>' +
+        '<span class="emoji">' + v.emoji + '</span>' +
+        '<span class="word">' + v.word + '</span>';
+      card.onclick = function () { speak(v.letter + '. ' + v.word); };
+      grid.appendChild(card);
+    });
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  function startGame() {
+    state.order = shuffle(WORDS).slice(0, ROUNDS_PER_GAME);
+    state.index = 0;
+    state.score = 0;
+    showScreen('play');
+    renderRound();
+  }
+
+  function renderRound() {
+    state.locked = false;
+    var item = state.order[state.index];
+    document.getElementById('hud-round').textContent = 'Word ' + (state.index + 1) + ' / ' + state.order.length;
+    document.getElementById('hud-score').textContent = '⭐ ' + state.score;
+    document.getElementById('progress-fill').style.width = ((state.index) / state.order.length * 100) + '%';
+    document.getElementById('word-emoji').textContent = item.emoji;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+
+    var letters = item.word.split('');
+    var missingIdx = letters.indexOf(item.missing);
+    var display = document.getElementById('word-display');
+    display.innerHTML = '';
+    letters.forEach(function (ch, i) {
+      var span = document.createElement('span');
+      if (i === missingIdx) {
+        span.className = 'blank';
+        span.id = 'blank-slot';
+        span.textContent = ch;
+      } else {
+        span.textContent = ch;
+      }
+      display.appendChild(span);
+    });
+
+    var opts = shuffle(VOWELS);
+    var optsWrap = document.getElementById('vowel-options');
+    optsWrap.innerHTML = '';
+    opts.forEach(function (v) {
+      var btn = document.createElement('button');
+      btn.className = 'vowel-option opt-' + v.className;
+      btn.textContent = v.letter;
+      btn.onclick = function () { handleAnswer(v.className.toLowerCase(), btn, item); };
+      optsWrap.appendChild(btn);
+    });
+
+    setTimeout(function () { speak('Say the word for ' + item.word.replace(item.missing, '_')); }, 200);
+  }
+
+  function handleAnswer(chosen, btnEl, item) {
+    if (state.locked) return;
+    var feedback = document.getElementById('feedback');
+    var blank = document.getElementById('blank-slot');
+
+    if (chosen === item.missing) {
+      state.locked = true;
+      state.score += 1;
+      btnEl.classList.add('correct');
+      blank.classList.add('filled');
+      feedback.textContent = 'Yay! "' + item.word.toUpperCase() + '" is correct! 🎉';
+      feedback.className = 'feedback good';
+      speak('Great job! ' + item.word);
+      setTimeout(nextRound, 1300);
+    } else {
+      btnEl.classList.add('wrong');
+      feedback.textContent = 'Try again!';
+      feedback.className = 'feedback bad';
+      setTimeout(function () { btnEl.classList.remove('wrong'); }, 400);
+    }
+  }
+
+  function nextRound() {
+    state.index += 1;
+    if (state.index >= state.order.length) {
+      endGame();
+    } else {
+      renderRound();
+    }
+  }
+
+  function endGame() {
+    document.getElementById('progress-fill').style.width = '100%';
+    var pct = state.score / state.order.length;
+    var starCount = pct >= 0.9 ? 3 : pct >= 0.6 ? 2 : 1;
+    var starsEl = document.getElementById('end-stars');
+    starsEl.textContent = '⭐'.repeat(starCount) + '☆'.repeat(3 - starCount);
+
+    var msg = 'You got ' + state.score + ' out of ' + state.order.length + ' words right!';
+    if (pct >= 0.9) msg += ' You are a Vowel Superstar! 🌟';
+    else if (pct >= 0.6) msg += ' Great work! Keep practicing! 💪';
+    else msg += ' Nice try! Let\'s practice more! 😊';
+    document.getElementById('end-message').textContent = msg;
+
+    showScreen('end');
+    if (starCount === 3) launchConfetti();
+    speak(msg);
+  }
+
+  function launchConfetti() {
+    var colors = ['#ff6b6b', '#ffb84d', '#4ecdc4', '#6c5ce7', '#ff85c0'];
+    for (var i = 0; i < 40; i++) {
+      (function () {
+        var piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(piece);
+        setTimeout(function () { piece.remove(); }, 4500);
+      })();
+    }
+  }
+
+  buildLearnScreen();
+  showScreen('home');
+</script>
+</body>
+</html>
